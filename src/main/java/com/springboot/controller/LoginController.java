@@ -21,11 +21,12 @@ public class LoginController {
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String login(Employee emp){
-        Subject currentUser =SecurityUtils.getSubject();
-        if(currentUser.isAuthenticated()) {
+            Subject currentUser =SecurityUtils.getSubject();
             UsernamePasswordToken token = new UsernamePasswordToken(emp.getEmpLoginName(), emp.getEmpPassword());
             try {
-                currentUser.login(token);
+                if(!currentUser.isAuthenticated()) {
+                    currentUser.login(token);
+                }
                 Session session = currentUser.getSession();
                 session.setAttribute("current", currentUser);
                 return "redirect:/index.html";
@@ -40,7 +41,6 @@ public class LoginController {
             } catch (Exception e) {
 
             }
-        }
         return "redirect:/login.html";
     }
 }
