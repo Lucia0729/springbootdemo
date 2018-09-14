@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+body {
+    margin: 0;
+    height: 100%;
+    background: linear-gradient(270deg, #8fc189, #4fa49a, #477da9, #5a6ba2);
+    background-size: 800% 800%;
+    -webkit-animation: background 10s ease infinite;
+    -moz-animation: background 10s ease infinite;
+    animation: background 10s ease infinite;
+}
+
+.login {
+    padding-top: 15%;
+    width: 20%;
+}
+
+.btn-center{
+    text-center:center;
+    margin:0 auto;
+}

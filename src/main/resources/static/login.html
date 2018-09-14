@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+<head>
+    <title>登录</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link type="text/css" rel="stylesheet" href="../css/login.css"/>
+    <script type="text/javascript" src="../jquery/jquery-2.2.4.js"></script>
+    <script type="text/javascript" src="../layui/layui.js "></script>
+
+</head>
+<body>
+<div class="clear box layui-main login">
+    <form class="layui-form layui-form-pane1" action="login" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名：</label>
+            <div class="layui-input-block">
+                <input type="text" name="empLoginName" required lay-verify="required"
+                       placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码：</label>
+            <div class="layui-input-block">
+                <input type="password" name="empPassword" required lay-verify="required"
+                       placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <button class="layui-btn layui-btn-normal btn-center" type="submit">登录</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
