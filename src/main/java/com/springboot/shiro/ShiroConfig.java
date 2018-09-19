@@ -7,12 +7,11 @@ import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Administrator on 2018/9/14.
@@ -27,15 +26,20 @@ public class ShiroConfig {
         manager.setCacheManagerConfigFile("classpath:ehcache-local.xml");
         return manager;
     }
-//    @Bean
-//    public SessionManager sessionManager()
-//    {
-//        ShiroSessionManager manager = new ShiroSessionManager();
-//        manager.setSessionDAO(new EnterpriseCacheSessionDAO());
-//        manager.setDeleteInvalidSessions(true);
-//        manager.setGlobalSessionTimeout(720000);
-//        return manager;
-//    }
+    @Bean
+    public SessionManager sessionManager()
+    {
+        ShiroSessionManager manager = new ShiroSessionManager();
+        manager.setSessionDAO(new EnterpriseCacheSessionDAO());
+        SessionListener sessionListener = new SessionListener();
+        Collection<org.apache.shiro.session.SessionListener> sessionListenerList = new ArrayList<>();
+        sessionListenerList.add(sessionListener);
+        manager.setSessionListeners(sessionListenerList);
+        manager.setSessionIdUrlRewritingEnabled(false);
+        manager.setDeleteInvalidSessions(true);
+        manager.setGlobalSessionTimeout(720000);
+        return manager;
+    }
     /**
      *
      * @Title: createMyRealm
@@ -68,7 +72,7 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(createMyRealm());
         securityManager.setCacheManager(ehCacheManager());
-//        securityManager.setSessionManager(sessionManager());
+        securityManager.setSessionManager(sessionManager());
         return securityManager;
     }
 
@@ -85,9 +89,9 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-        shiroFilterFactoryBean.setLoginUrl("/login.html");
+        shiroFilterFactoryBean.setLoginUrl("/login");
         // 登录成功后要跳转的链接,建议不配置,shiro认证成功自动到上一个请求路径
-        shiroFilterFactoryBean.setSuccessUrl("/index.html");
+        shiroFilterFactoryBean.setSuccessUrl("/index");
         // 未授权界面,指定没有权限操作时跳转页面
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 

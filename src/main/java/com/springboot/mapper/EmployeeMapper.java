@@ -2,10 +2,10 @@ package com.springboot.mapper;
 
 import com.springboot.entity.Employee;
 import org.apache.ibatis.annotations.*;
-import org.springframework.data.annotation.Id;
+import org.apache.ibatis.mapping.FetchType;
+
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author Administrator on 2018/9/10.
@@ -37,6 +37,9 @@ public interface EmployeeMapper {
             @Result(column = "update_time", property = "updateTime", javaType = Date.class),
             @Result(column = "update_by", property = "updateBy", javaType = Integer.class),
             @Result(column = "usable", property = "usable", javaType = Boolean.class),
-            @Result(column = "remarks", property = "remarks", javaType = String.class)})
+            @Result(column = "remarks", property = "remarks", javaType = String.class),
+            @Result(column = "role_id",property = "roleList", many=@Many(select="com.springboot.mapper.SysRoleMapper.findSysRoleByEmpId",fetchType = FetchType.LAZY))
+
+    })
     public Employee findEmployeeByUserName(@Param("username") String username);
 }
